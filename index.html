@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AFG.EDIT - Persian Song Translations</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #34b853;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('pic1/oneee.jpg');
+      background-size: cover;
+      filter: blur(5px);
+      z-index: -1;
+    }
+
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    /* Updated Header Styles */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, #1db954, #1ed760, #1db954);
+      color: #fff;
+      padding: 70px 0;
+      text-align: center;
+      border-bottom: 5px solid #1db954;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin: 10px 0 0;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .youtube-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #fff;
+      animation: fadeIn 2s ease;
+    }
+
+    .youtube-button:hover {
+      background: #fff;
+      color: #1db954;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+   
+    /* Keyframe Animations */
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Artist Navigation */
+    .artist-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .artist-card {
+      width: 180px;
+      text-align: center;
+      font-family: 'Nunito';
+      cursor: pointer;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 10px;
+      padding: 15px;
+      transition: transform 0.3s;
+    }
+
+    .artist-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .artist-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Playlist Sections */
+    .playlist-section {
+      display: none;
+    }
+
+    .playlist-section.active {
+      display: block;
+    }
+
+    /* Song Translation Items */
+    .translations-list {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 15px; /* Space between items */
+}
+
+.translation-item {
+  width: 90%; /* Full width for each song card */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  align-items: center; /* Center items horizontally */
+  text-align: left; /* Align text to the left */
+}
+
+.translation-item:hover {
+  transform: scale(1.02); /* Slight scale effect on hover */
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.translation-item img {
+  width: 150px; /* Fixed width for the image */
+  height: 150px; /* Fixed height for the image */
+  border-radius: 10px;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  margin-right: 20px; /* Space between image and text */
+}
+
+.song-info {
+  flex: 1; /* Allow text to take up remaining space */
+}
+
+.song-info h4 {
+  font-size: 36px;
+  color: rgb(71, 201, 125);
+  margin: 0;
+  font-family: 'Nunito';
+  
+}
+
+.song-info p {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-family: 'inter';
+}
+#back-to-top-btn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom */
+  right: 20px; /* Place the button at the right */
+  z-index: 99; /* Make sure it's on top of other elements */
+  padding: 20px; /* Padding for better appearance */
+  border: none; /* Remove border */
+  border-radius: 20%; /* Circular button */
+  background-color: #34b853; /* Button background color */
+  color: white; /* Text color */
+  font-size: 20px; /* Text size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, opacity 0.3s; /* Smooth transitions */
+  
+}
+
+#back-to-top-btn:hover {
+  background-color: #000000; /* Darker background on hover */
+}
+html{
+  scroll-behavior: smooth;
+}
+  </style>
+</head>
+<body>
+  <div class="background-image"></div>
+  <div class="background-overlay"></div>
+
+  <!-- Updated Header -->
+  <header>
+    <div class="container">
+      <h1>AFG.EDIT</h1>
+      <p>Persian Song Translations & Music Videos<br><br>
+        ترجمه آهنگ های کیپاپ و انگیسی
+</p>
+      <a href="https://youtube.com/@blueamygdala" class="youtube-button" target="_blank">Visit YouTube Channel</a>
+    </div>
+  </header>
+  
+  
+  <!-- Artist Navigation -->
+  <div class="container">
+    <div class="artist-grid">
+      <div class="artist-card" onclick="showPlaylist('jungkook')">
+        <img src="pic1/9ea5c076eb8d46308aebe61be5c557e3.jpg" alt="Jungkook">
+        <h3>Jungkook</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('bts')">
+        <img src="pic1/f3bf04e1045e9616e740305af42ab8fa (1).jpg" alt="BTS">
+        <h3>BTS</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('blackpink')">
+        <img src="pic1/IMG_20220916_135949.jpg" alt="Blackpink">
+        <h3>Blackpink</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('straykids')">
+        <img src="pic1/skz.jpg" alt="Stray Kids">
+        <h3>Stray Kids</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('newjeans')">
+        <img src="pic1/images (2).jpeg" alt="New Jeans">
+        <h3>New Jeans</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('txt')">
+        <img src="pic1/214c5538686f8cf80934dd485f08899f.jpg" alt="TXT">
+        <h3>TXT</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('english')">
+        <img src="pic1/the-weeknd-new-album-21641287511-0.jpg" alt="English Songs">
+        <h3>English Songs</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('nct')">
+        <img src="pic1/NCT127-cr-SM-Entertainment-press-2023-billboard-1548.jpg" alt="NCT">
+        <h3>NCT</h3>
+        
+      </div>
+      <div class="artist-card" onclick="showPlaylist('aespa')">
+        <img src="pic1/1900x1900-000000-80-0-0 (1).jpg" alt="aespa">
+        <h3>Aespa</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('enhypen')">
+        <img src="pic1/Screenshot_20240902_190408_Instagram-3829233014.jpg" alt="enhypen">
+        <h3>Enhypen</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('babymonster')">
+        <img src="pic1/baby-monster-announces-full-length-project-for-1st-1922301.jpg" alt="babymonster">
+        <h3>Babymonster</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('exo')">
+        <img src="pic1/Screen-Shot-2021-04-07-at-10.55.20-AM-1024x616.png" alt="exo">
+        <h3>EXO</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('seventeen')">
+        <img src="pic1/EwQhgLFUcAEwi8l.jpg" alt="seventeen">
+        <h3>seventeen</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('lesserafim')">
+        <img src="pic1/ruchu26qynzDpJAoAKbi-o.jpg" alt="lesserafim">
+        <h3>Lesserafim</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('gidel')">
+        <img src="pic1/spuIiXDJ_400x400.jpg" alt="gidel">
+        <h3>(G)-idle</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('v')">
+        <img src="pic1/BTS_Proof-Concept-Photo_Door-ver._V-2.jpg" alt="v">
+        <h3>V</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('rm')">
+        <img src="pic1/web-lead_40U40_202238.jpg" alt="rm">
+        <h3>RM</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('jin')">
+        <img src="pic1/jin-of-bts-things-to-know-facts.jpg" alt="jin">
+        <h3>Jin</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('suga')">
+        <img src="pic1/suga.webp" alt="suga">
+        <h3>Suga</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('jhope')">
+        <img src="pic1/Screenshot-2024-09-04-163629-4275026140.png" alt="jhope">
+        <h3>J-hope</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('jimin')">
+        <img src="pic1/VK_1340_Final_cropped.jpg" alt="jimin">
+        <h3>Jimin</h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('soloartist')">
+        <img src="pic1/Screenshot_20240223_150249_Instagram.jpg" alt="soloartist">
+        <h3>Solo </h3>
+      </div>
+      <div class="artist-card" onclick="showPlaylist('other')">
+        <img src="pic1/20241103224819_Jaehyun.jpg" alt="other">
+        <h3>other</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Playlist Sections -->
+  <div class="container">
+    <!-- Jungkook Playlist -->
+    <div id="jungkook" class="playlist-section active">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/HsCVgBwop8Q')">
+          <img src="pic1/seven.jpg" alt="Seven">
+          <div class="song-info">
+            <h4>Seven</h4>
+            <p>Jungkook</p>
+          </div>
+        </div>
+        <!-- Add more Jungkook songs here -->
+           <!-- New Song: Standing Next to You -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/bQ70hDG9G7Q?si=4GfthKIK8QioijER')">
+      <img src="pic1/jungkook-scaled.jpg" alt="Standing Next to You">
+      <div class="song-info">
+        <h4>Standing Next to You</h4>
+        <p>Jungkook</p>
+      </div>
+    </div>
+
+    <!-- Add more Jungkook songs here -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/FernzQpzhXI?si=45TobMufQBkpShJ9')">
+      <img src="pic1/bts-jung-kook-3d-video.jpg" alt="Standing Next to You">
+      <div class="song-info">
+        <h4>3D</h4>
+        <p>Jungkook</p>
+      </div>
+    </div>
+
+    </div>
+</div>
+      </div>
+    </div>
+
+    <!-- BTS Playlist -->
+    <div id="bts" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/T3us-GTjqow?si=9HU3M4z1nyHb7ss3')">
+          <img src="pic1/118266409_3885574594791107_7573203412296651777_o.jpg"Dynamite">
+          <div class="song-info">
+            <h4>Dynamite</h4>
+            <p>BTS</p>
+          </div>
+        </div>
+        <!-- Add more BTS songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/RTZU7bjYZQg?si=g6YTmIkIj1IfCUTv')">
+          <img src="pic1/BTSS_1654833731878_1654833749697.png" alt="Sweet Night">
+          <div class="song-info">
+            <h4>Yet to come</h4>
+            <p>BTS</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/BVPwk0bJLxM?si=njXR0kRL0XeJklfl')">
+            <img src="pic1/bts-pied-piper.jpg" alt="Sweet Night">
+            <div class="song-info">
+              <h4>Pied paper</h4>
+              <p>BTS</p>
+            </div>
+            </div>
+      </div>
+    </div>
+
+    <!-- Blackpink Playlist -->
+    <div id="blackpink" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/WCLitladJ-I?si=E18IyvUamPFP-3dh')">
+          <img src="pic1/BLACKPINK-‘Shut-Down-billboard-1548.jpg" alt="Song Name">
+          <div class="song-info">
+            <h4>Shut down</h4>
+            <p>Blackpink</p>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/4Ez_kEN033c?si=4qSyA59PkZvDrvCh')">
+          <img src="pic1/8b7fb3a008a23afbeef858a1d869f88f.607x607x1.jpg" alt="Sweet Night">
+          <div class="song-info">
+            <h4>Typa girl</h4>
+            <p>Blackpink</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/hrlPmm26Mbo?si=Z7TaBOGiot2LuEDA')">
+            <img src="pic1/bp6hdlnn.jpg" alt="Sweet Night">
+            <div class="song-info">
+              <h4>Girl</h4>
+              <p>Blackpink</p>
+            </div>
+            </div>
+      </div>
+    </div>
+    <div id="nct" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/gyZJL0J54fw?si=sXBrBzYJikqqiXvD')">
+          <img src="pic1/NCT127-cr-SM-Entertainment-press-2023-billboard-1548.jpg" alt="Song Name">
+          <div class="song-info">
+            <h4>Walk</h4>
+            <p>Nct 127</p>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/lzmF5aBdLFc?si=kjVIsAnrAd3pFoe8')">
+          <img src="pic1/20230828091647_NCT-U-Baggy-Jeans-.jpg" alt="Sweet Night">
+          <div class="song-info">
+            <h4>Baggy jeans</h4>
+            <p>NCT</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/stkP3-13c7U?si=edLvibZYX0IQoX0Q')">
+            <img src="pic1/nct-dream-smoothie_1711362826909_1711362837249.jpg" alt="Sweet Night">
+            <div class="song-info">
+              <h4>Smoothi</h4>
+              <p>NCT dream</p>
+            </div>
+            </div>
+            <div class="translation-item" onclick="window.open('https://youtu.be/YPsYh6mGJRY?si=aOmYNfacfUKdk5jl')">
+              <img src="pic1/artworks-000645359776-u9s519-t500x500.jpg" alt="Sweet Night">
+              <div class="song-info">
+                <h4>Love talk</h4>
+                <p>WayV</p>
+              </div>
+              </div>
+              <div class="translation-item" onclick="window.open('https://youtu.be/IOkpOJmVSh8?si=Jbkf2uxeY8igbSii')">
+                <img src="pic1/20240924091226_nct-wish-steady-.jpg" alt="Sweet Night">
+                <div class="song-info">
+                  <h4>Steady</h4>
+                  <p>NCT wish </p>
+                </div>
+                </div>
+      </div>
+    </div>
+    <div id="english" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/PigwLBxT5YM?si=kcOl-Ayw60i5TgBL')">
+          <img src="pic1/220px-Lady_Gaga_and_Bruno_Mars_-_Die_with_a_Smile.png" alt="Song Name">
+          <div class="song-info">
+            <h4>Die with smile</h4>
+            <p>Ladt Gaga ft Bruno marc</p>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/DXTGnzgVSug?si=eFLOKY3LMDjJ341W')">
+          <img src="pic1/artworks-KynjwNxMmjltB5hN-H8VjIQ-t500x500.jpg" alt="Sweet Night">
+          <div class="song-info">
+            <h4>Gota only</h4>
+            <p>FloyyMenor</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/fh5BU0oJ_xY?si=3OkmSwun4J0ah8Ql')">
+            <img src="pic1/size_m_1728479065.jpg" alt="Sweet Night">
+            <div class="song-info">
+              <h4>Birds of feather</h4>
+              <p>Bille eillish</p>
+            </div>
+            </div>
+      </div>
+    </div>
+    <div id="newjeans" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/tZnu6WhksG4?si=Y6kumJklGv0e8ke0')">
+          <img src="pic1/1_jCSv-TV5n1jetTRePSPbog.png" alt="Song Name">
+          <div class="song-info">
+            <h4>Ditto</h4>
+            <p>newjeans</p>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/ZMjW4rEjZXI?si=KSztkNBzKfMmS6iY')">
+          <img src="pic1/20230514010840_NewJeans-1.jpg" alt="Sweet Night">
+          <div class="song-info">
+            <h4>OMG</h4>
+            <p>newjeans</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/z3krpO5Fyuo?si=KQiQR_NKElPrHqVu')">
+            <img src="pic1/newjeans-gods.jpg"Sweet Night">
+            <div class="song-info">
+              <h4>Super Shy</h4>
+              <p>newjeans</p>
+            </div>
+            </div>
+      </div>
+    </div>
+    <div id="straykids" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/NOH_QShAhcs?si=aHqWJNSTYlPcIKwy')">
+          <img src="pic1/fd4b0f95-2311-4bf7-bb93-afe5e8223613.png" alt="Song Name">
+          <div class="song-info">
+            <h4>chk chk boom</h4>
+            <p>straykids</p>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+        <div class="translation-item" onclick="window.open('https://youtu.be/GzUgN3PvmT8?si=d818SKCAmp24tknN')">
+          <img src="pic1/STRAY-KIDS-Walkin-On-Water-MV-Kpop-Fashion-Lee-Know-Look-1-1.jpg" alt="Sweet Night">
+          <div class="song-info">
+            <h4>Walk on the water</h4>
+            <p>Straykids</p>
+          </div>
+          </div>
+          <div class="translation-item" onclick="window.open('https://youtu.be/jaDx-gL3Mes?si=kdQOKfsszd0mUH8g')">
+            <img src="pic1/straykids-lalalala.png" alt="Sweet Night">
+            <div class="song-info">
+              <h4>La la la</h4>
+              <p>Straykids</p>
+            </div>
+            </div>
+      </div>
+    </div>
+   
+
+<!-- Playlist Section -->
+<div id="v" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/FernzQpzhXI?si=45TobMufQBkpShJ9')">
+      <img src="pic1/7bce9f406517b721dabe315d32a58eaad8-vslowdancing.1x.rsquare.w1400.png" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Slow dancing</h4>
+        <p>Taehyung (V)</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/_iBu5sPJslE?si=yjg_1uw58iSiZPfq')">
+      <img src="pic1/V-Love-Me-Again-Official-MV-screenshot-billboard-1548.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Love me agian</h4>
+        <p>Taehyung (V)</p>
+      </div>
+    </div>
+    <div class="translation-item" onclick="window.open('https://youtu.be/_iBu5sPJslE?si=yjg_1uw58iSiZPfq')">
+      <img src="pic1/6036_16287_4312.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Winter ahead</h4>
+        <p>Taehyung (V)</p>
+      </div>
+    </div>
+
+
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="aespa" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/epYTOIfwSO0?si=siNaKjm75_x91KZh')">
+      <img src="pic1/aespa-scaled.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Drama</h4>
+        <p>aespa</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/KlaoMCAEbgE?si=rssvGTpBWPqZAwKB')">
+      <img src="pic1/aespa-armageddon-1.png" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Armageddon</h4>
+        <p>aespa</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="enhypen" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/-RHSXhJbEJY?si=0ecgtj8LPjhHhoHH')">
+      <img src="pic1/ENHYPEN-Bite-Me-screenshot-billboard-1548.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Bite me</h4>
+        <p>Enhypen</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/djstDEMO5gM?si=SfoTt2ZOfOmj2rUJ')">
+      <img src="pic1/enhypen-nodoubt.png" alt="Sweet Night">
+      <div class="song-info">
+        <h4>No doubt</h4>
+        <p>Enhypen</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="seventeen" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/N1p6dYZNjrs?si=BiOAU0Z0iorHR2mF')">
+      <img src="pic1/SEVENTEENSUPER.png" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Super</h4>
+        <p>Seventeen</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/DaX2YvKqcoY?si=EF1eoF2qgGvkoNkbe/y')">
+      <img src="pic1/artworks-7KxwzbKGIA9wDlhv-v5pJfw-t500x500.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Maestro</h4>
+        <p>Seventeen</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+   </div>
+</div>
+<!-- Playlist Section -->
+<div id="babymonster" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/_giidHIg-KM?si=EJq8q_3O-BeceJw1')">
+      <img src="pic1/IMG-20240401-WA0000-1.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Sheesh</h4>
+        <p>Babymonster</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/f2rtr9f5t14?si=YyGm87VGfoikwFIl')">
+      <img src="pic1/babymonster-drip.png" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Drip</h4>
+        <p>Babymonster</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="exo" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/RqEs0WkTynw?si=HlktqHv4-zAXN5uZ')">
+      <img src="pic1/20230710091132_EXO-Cream-Soda.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Cream soda</h4>
+        <p>EXO</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/EQH8lm3og8c?si=EFUhYiX-miQpK8ZP')">
+      <img src="pic1/exo-let-me-in-696x442.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Let me in</h4>
+        <p>EXO</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+    <!-- Playlist Section -->
+<div id="lesserafim" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/UsBX8ju9IZ4?si=Is33NICKvbiTjCTD')">
+      <img src="pic1/LE_SSERAFIM_Smart_Yunjin_1.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Smart</h4>
+        <p>Lesserafim</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/k_yjM10Hs-Q?si=3w_T-tGesB2RUACi')">
+      <img src="pic1/LESSERAFIMEASY.jpg"Sweet Night">
+      <div class="song-info">
+        <h4>Easy</h4>
+        <p>Lesserafim</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="gidel" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/zYV6ZEIpDQ8?si=VtZjCmuDTN1E7xHG')">
+      <img src="pic1/gi-dle-super-lady.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Super lady</h4>
+        <p>(G)-idle</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/JDZ9fP7MMYA?si=UfUY7_xmyrpePUw2')">
+      <img src="pic1/20240121152710_GIDLE_f0bf7d.jpg"alt="Sweet Night">
+      <div class="song-info">
+        <h4>Wife</h4>
+        <p>(G)-idle</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="suga" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/mBqWdhdh_qA?si=y3Z3dU7PJ0xaZFXH')">
+      <img src="pic1/4a91e10bcfeaea74f9d3ffad9c9fc2a0.1000x1000x1.png" alt="Christmas Tree">
+      <div class="song-info">
+        <h>People</h></h4>
+        <p>Suga</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/LwgHu1etEmE?si=w3FPUnI0t6pMhqoQ')">
+      <img src="pic1/Agust-D-People-Live-Clip-90-_-SUGA-Road-to-D-DAY-screenshot-billboard-1548.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Dday</h4>
+        <p>Suga</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="jin" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/gwCXaej_8_0?si=Y4gCRDounUyrntDc')">
+      <img src="pic1/BTS-Jin-Running-Wild-MV-Fashion.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Runing wild</h4>
+        <p>Jin</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/2TLSa-HOyoQ?si=IEcqcW1ZS2FppgLc')">
+      <img src="pic1/281321397b9549a.png" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Astronaut</h4>
+        <p>Jin</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="jimin" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/FEWMCv_rehg?si=NzoDbfpy3kmIRvWF')">
+      <img src="pic1/2679_7152_1823.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Who</h4>
+        <p>Jimin</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/FernzQpzhXI?si=45TobMufQBkpShJ9')">
+      <img src="pic1/jimin-like-crazy (1).jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Like crazy</h4>
+        <p>Jimin</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="rm" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/zp3Byy2U9kM?si=76dghDqRSOTEmbeE')">
+      <img src="pic1/rm-wildflower.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Wild Flower</h4>
+        <p>RM</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/Dd8HGyTm5mI?si=b2n37XpzE8SWpPsT')">
+      <img src="pic1/RM-Come-back-to-me-screenshot-2024-billboard-1548.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Come back home</h4>
+        <p>RM</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="jhope" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/pAg20HzN5JE?si=H4sqBCPILbgkk6cF')">
+      <img src="pic1/24b80eb67b322a1cf5f2d5c6f6262213.1000x1000x1.png" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>I wonder</h4>
+        <p>J-hope</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/5VkszRCyiGA?si=J1fy67AzGNODjgOy')">
+      <img src="pic1/sddefault.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>Neron</h4>
+        <p>j-hope</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="other" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/7xMeUhyMw2o?si=2CEFbmg93nmJpM3-')">
+      <img src="pic1/daum-kr-got7s-upcoming-mini-album-with-title-song-python-v0-zuklwexqgrce1.jpg" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Got7</h4>
+        <p>Phyton</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/vmdrPWkYADQ?si=L7ArVpi8OnAWRrpM')">
+      <img src="pic1/Screenshot_20250205-092350.jpg" alt="Sweet Night">
+      <div class="song-info">
+        <h4>BTS reaction to Sequence</h4>
+        <p>Sequence</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+<!-- Playlist Section -->
+<div id="soloartist" class="playlist-section">
+  <div class="translations-list">
+    <!-- Song 1: Christmas Tree -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/k-hQmAy4Zn4?si=reu2eyeXai81Zorp')">
+      <img src="pic1/lucas-renegade-mv-still_2_660b977d75144.webp" alt="Christmas Tree">
+      <div class="song-info">
+        <h4>Renegade</h4>
+        <p>Lucas</p>
+      </div>
+    </div>
+
+    <!-- Song 2: Sweet Night -->
+    <div class="translation-item" onclick="window.open('https://youtu.be/XZLVvont_bY?si=IANvNWMI0fRkisI0')">
+      <img src="pic1/05b5e858458aa6f675e4d89ea880fb49d4f59c5d.gif" alt="Sweet Night">
+      <div class="song-info">
+        <h4>BTBT</h4>
+        <p>BI</p>
+      </div>
+    </div>
+
+    <!-- Add more Taehyung songs here -->
+  </div>
+</div>
+    <!-- Add other playlists (Stray Kids, New Jeans, TXT, English Songs, NCT) following the same pattern -->
+    <div id="txt" class="playlist-section">
+      <div class="translations-list">
+        <div class="translation-item" onclick="window.open('https://youtu.be/TxtNaJH5vWk?si=EWwgSIyKJ1GVxqFz')">
+          <img src="pic1/txt-overthemoon.png" alt="Song Name">
+          <div class="song-info">
+            <h4>Over the moon</h4>
+            <p>TXT</p>
+          </div>
+        </div>
+            <!-- Add more Blackpink songs here -->
+            <div class="translation-item" onclick="window.open('https://youtu.be/Cp_omOwi5G8?si=RmOpSr1zAHavFG56')">
+              <img src="pic1/txt-dejavu.png" alt="Sweet Night">
+              <div class="song-info">
+                <h4>Deja Vu</h4>
+                <p>TXT</p>
+              </div>
+              </div>
+          </div>
+        </div>
+        <!-- Add more Blackpink songs here -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AFG.EDITE. All rights reserved.</p>
+    </div>
+  </footer>
+  <button id="back-to-top-btn" title="Go to top">↑</button>
+  
+
+</body>
+<script>
+  // Function to show the selected playlist
+  function showPlaylist(artist) {
+    // Hide all playlists
+    document.querySelectorAll('.playlist-section').forEach(section => {
+      section.classList.remove('active');
+    });
+
+    // Show the selected playlist
+    const playlist = document.getElementById(artist);
+    playlist.classList.add('active');
+
+    // Optional: Smooth scroll to the playlist
+    playlist.scrollIntoView({ behavior: 'smooth' });
+  }
+  // Get the button
+const backToTopBtn = document.getElementById("back-to-top-btn");
+
+// Show the button when the user scrolls down 20px from the top
+window.onscroll = function () {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    backToTopBtn.style.display = "block";
+  } else {
+    backToTopBtn.style.display = "none";
+  }
+};
+
+// Scroll to the top of the page when the button is clicked
+backToTopBtn.addEventListener("click", () => {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+});
+ 
+</script>
+</html>
